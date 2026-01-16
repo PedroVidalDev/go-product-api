@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: goproduct_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - goproduct_data:/var/lib/postgresql/data
+    networks:
+      - goproduct-network
+
+volumes:
+  goproduct_data:
+
+networks:
+  goproduct-network:
+    name: goproduct-network
