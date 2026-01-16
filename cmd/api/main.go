@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-product-api/internal/controllers"
-	"go-product-api/internal/repositories"
-	"go-product-api/internal/services"
+	"go-product-api/internal/routes"
 	database "go-product-api/pkg"
 	"log"
 	"os"
@@ -23,15 +21,10 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
-	
-	productRepo := repositories.NewProductRepository(dbConnection)
-	productService := services.NewProductService(productRepo)
-	productController := controllers.NewProductController(productService)
 
 	r := gin.Default()
 
-	r.GET("/products", productController.GetProducts)
-	r.POST("/products", productController.CreateProduct)
+	routes.SetupRoutes(r, dbConnection)
 
 	port := fmt.Sprintf(
         ":%s",
