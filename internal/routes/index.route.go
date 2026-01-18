@@ -14,5 +14,10 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	productService := services.NewProductService(productRepo)
 	productController := controllers.NewProductController(productService)
 
+	authRepo := repositories.NewUserRepository(db)
+	authService := services.NewAuthService(authRepo)
+	authController := controllers.NewAuthController(authService)
+
+	RegisterAuthRoutes(r, authController)
 	RegisterProductRoutes(r, productController)
 }

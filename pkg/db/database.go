@@ -24,8 +24,7 @@ func InitDB() (*gorm.DB, error) {
 		return nil, fmt.Errorf("Error with the database connection")
 	}
 
-	err = db.AutoMigrate(&models.Product{})
-	err = db.AutoMigrate(&models.User{})
+	err = db.AutoMigrate(&models.Product{}, &models.User{})
 
 	if (err != nil) {
 		return nil, fmt.Errorf("Erro na migracao")
