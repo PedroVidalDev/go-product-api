@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go-product-api/internal/models"
 	"os"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -26,6 +25,7 @@ func InitDB() (*gorm.DB, error) {
 	}
 
 	err = db.AutoMigrate(&models.Product{})
+	err = db.AutoMigrate(&models.User{})
 
 	if (err != nil) {
 		return nil, fmt.Errorf("Erro na migracao")
