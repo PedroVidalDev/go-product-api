@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"go-product-api/internal/routes"
-	database "go-product-api/pkg"
+	database "go-product-api/pkg/db"
 	"log"
 	"os"
 
