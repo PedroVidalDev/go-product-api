@@ -17,7 +17,7 @@ func (s *ProductService) GetProducts() ([]models.Product, error) {
 	return s.repo.GetProducts()
 }
 
-func  (s *ProductService) CreateProduct(name string, price float64) (models.Product, error) {
+func  (s *ProductService) CreateProduct(name string, price float64, userId uint) (models.Product, error) {
 	if price < 0 {
 		price = 0
 	}
@@ -25,6 +25,7 @@ func  (s *ProductService) CreateProduct(name string, price float64) (models.Prod
 	newProduct := models.Product {
 		Name: name,
 		Price: price,
+		UserId: userId,
 	}
 
 	return s.repo.CreateProduct(newProduct)
