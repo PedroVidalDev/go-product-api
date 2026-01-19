@@ -6,27 +6,27 @@ import (
 	"gorm.io/gorm"
 )
 
-type IProductRepository interface { // Interface ja eh aplicada no productRepository, pela mesma ter as funcoes previstas em IProductRepository
+type IProductRepository interface { // Interface already applied to productRepository, as it has the functions defined in IProductRepository
 	GetProducts() ([]models.Product, error)
 
 	CreateProduct(product models.Product) (models.Product, error)
 
 }
 
-type productRepository struct { // 'Classe' da repository
+type productRepository struct { // Repository 'class'
 	db *gorm.DB
 }
 
-func NewProductRepository(db *gorm.DB) IProductRepository { // Funcao que retorna uma nova instancia de repository
-	return &productRepository { // & aponta para o ponteiro, original
+func NewProductRepository(db *gorm.DB) IProductRepository { // Function that returns a new repository instance
+	return &productRepository { // & points to the pointer, original
 		db: db,
 	}
 }
 
-func (r *productRepository) GetProducts() ([]models.Product, error) { // Lugar que cria a funcao getProducts e associa a struct de repository, para cumprir o contrato
+func (r *productRepository) GetProducts() ([]models.Product, error) { // Place that creates the getProducts function and associates it with the repository struct, to fulfill the contract
 	var products []models.Product
 
-	result := r.db.Find(&products)
+	result := r.db.Preload("User").Find(&products)
 
 	if (result.Error != nil) {
 		return nil, result.Error
@@ -35,7 +35,7 @@ func (r *productRepository) GetProducts() ([]models.Product, error) { // Lugar q
 	return products, nil
 }
 
-func (r *productRepository) CreateProduct(p models.Product) (models.Product, error) { // Lugar que cria a funcao createProduct e associa a struct de repository, para cumprir o contrato
+func (r *productRepository) CreateProduct(p models.Product) (models.Product, error) { // Place that creates the createProduct function and associates it with the repository struct, to fulfill the contract
 	result := r.db.Create(&p)
 
 	if result.Error != nil {

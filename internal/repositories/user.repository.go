@@ -6,17 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type IUserRepository interface { // Interface ja eh aplicada no productRepository, pela mesma ter as funcoes previstas em IProductRepository
+type IUserRepository interface { // Interface already applied to userRepository, as it has the functions defined in IUserRepository
 	FindByEmail(email string) (models.User, error)
 	CreateUser(p models.User) (models.User, error)
 }
 
-type userRepository struct { // 'Classe' da repository
+type userRepository struct { // Repository 'class'
 	db *gorm.DB
 }
 
-func NewUserRepository(db *gorm.DB) IUserRepository { // Funcao que retorna uma nova instancia de repository
-	return &userRepository { // & aponta para o ponteiro, original
+func NewUserRepository(db *gorm.DB) IUserRepository { // Function that returns a new repository instance
+	return &userRepository { // & points to the pointer, original
 		db: db,
 	}
 }
