@@ -62,6 +62,11 @@ go mod tidy
 go run cmd/api/main.go
 ```
 
+4. If you want to run using Docker (remember to define the env variables in a .env file):
+```bash
+docker-compose up --build
+```
+
 The API will be available at `http://localhost:8080`
 
 ## 📍 API Routes
