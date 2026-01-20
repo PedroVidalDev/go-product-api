@@ -4,7 +4,7 @@ import (
 	"go-product-api/internal/dtos/products"
 	"go-product-api/internal/services"
 	"net/http"
-
+	_ "go-product-api/internal/models"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +16,16 @@ func NewProductController(s *services.ProductService) *ProductController {
 	return &ProductController{service: s}
 }
 
+// GetProducts retrieves all products
+// @Summary      Get Products
+// @Description  Retrieves all products from the database
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Success      200  {array}   models.Product
+// @Failure      500  {object}  map[string]string
+// @Security     BearerAuth
+// @Router       /products [get]
 func (c *ProductController) GetProducts(ctx *gin.Context) {
 	products, err := c.service.GetProducts()
 
@@ -27,6 +37,18 @@ func (c *ProductController) GetProducts(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, products)
 }
 
+// CreateProduct creates a new product
+// @Summary      Create Product
+// @Description  Creates a product linked to the authenticated user
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Param        request body dtos.CreateProductType true "Product Data"
+// @Success      201  {object}  models.Product
+// @Failure      400  {object}  map[string]string
+// @Failure      401  {object}  map[string]string
+// @Security     BearerAuth
+// @Router       /products [post]
 func (c *ProductController) CreateProduct(ctx *gin.Context) {
 	userIdVal, exists := ctx.Get("userId")
 	if !exists {

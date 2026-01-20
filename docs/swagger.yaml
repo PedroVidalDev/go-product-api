@@ -1,0 +1,227 @@
+basePath: /
+definitions:
+  go-product-api_internal_dtos_products.CreateProductType:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+    required:
+    - name
+    - price
+    type: object
+  go-product-api_internal_dtos_user.CreateUserType:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  go-product-api_internal_dtos_user.LoginType:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  go-product-api_internal_models.Product:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      updatedAt:
+        type: string
+      user:
+        $ref: '#/definitions/go-product-api_internal_models.User'
+      user_id:
+        type: integer
+    type: object
+  go-product-api_internal_models.User:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      products:
+        items:
+          $ref: '#/definitions/go-product-api_internal_models.Product'
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: pedro@exemplo.com
+    name: Pedro Vidal
+  description: Example API created with Gin and Gorm
+  termsOfService: http://swagger.io/terms/
+  title: API de Produtos
+  version: "1.0"
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates a user and returns a JWT token
+      parameters:
+      - description: User Login Credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/go-product-api_internal_dtos_user.LoginType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login User
+      tags:
+      - auth
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all products from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/go-product-api_internal_models.Product'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get Products
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Creates a product linked to the authenticated user
+      parameters:
+      - description: Product Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/go-product-api_internal_dtos_products.CreateProductType'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/go-product-api_internal_models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create Product
+      tags:
+      - products
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new user account in the system
+      parameters:
+      - description: User Registration Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/go-product-api_internal_dtos_user.CreateUserType'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/go-product-api_internal_models.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register User
+      tags:
+      - auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

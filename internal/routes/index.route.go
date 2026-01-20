@@ -7,6 +7,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+
+	swaggerFiles "github.com/swaggo/files"
+    ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
@@ -20,4 +23,6 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 
 	RegisterAuthRoutes(r, authController)
 	RegisterProductRoutes(r, productController)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 }

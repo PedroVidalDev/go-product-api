@@ -6,11 +6,25 @@ import (
 	database "go-product-api/pkg/db"
 	"log"
 	"os"
-
+	docs "go-product-api/docs"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
+// @title           API de Produtos
+// @version         1.0
+// @description     Example API created with Gin and Gorm
+// @termsOfService  http://swagger.io/terms/
+
+// @contact.name    Pedro Vidal
+// @contact.email   pedrohvidals@gmail.com
+
+// @host            localhost:8080
+// @BasePath        /
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
 func main() {
 	err := godotenv.Load()
     if err != nil {
@@ -23,6 +37,8 @@ func main() {
     }
 
 	r := gin.Default()
+
+	docs.SwaggerInfo.BasePath = "/"
 
 	routes.SetupRoutes(r, dbConnection)
 
