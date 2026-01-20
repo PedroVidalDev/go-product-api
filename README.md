@@ -54,7 +54,7 @@ cd go-product-api
 
 2. Install dependencies:
 ```bash
-go mod download
+go mod tidy
 ```
 
 3. Run the project:
@@ -63,6 +63,63 @@ go run cmd/api/main.go
 ```
 
 The API will be available at `http://localhost:8080`
+
+## 📍 API Routes
+
+### Authentication Routes
+
+#### Register User
+- **POST** `/register`
+- **Description**: Creates a new user account
+- **Body**:
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+```
+- **Response**: User object (201 Created)
+
+#### Login
+- **POST** `/login`
+- **Description**: Authenticates a user and returns a JWT token
+- **Body**:
+```json
+{
+  "email": "john@example.com",
+  "password": "securepassword"
+}
+```
+- **Response**: JWT token (200 OK)
+
+### Product Routes (Protected)
+
+All product routes require authentication via Bearer token in the Authorization header.
+
+#### Get All Products
+- **GET** `/products`
+- **Description**: Retrieves all products with their associated users
+- **Headers**: `Authorization: Bearer <token>`
+- **Response**: Array of products (200 OK)
+
+#### Create Product
+- **POST** `/products`
+- **Description**: Creates a new product linked to the authenticated user
+- **Headers**: `Authorization: Bearer <token>`
+- **Body**:
+```json
+{
+  "name": "Product Name",
+  "price": 99.99
+}
+```
+- **Response**: Created product object (201 Created)
+
+### Documentation
+
+- **Swagger UI**: `http://localhost:8080/swagger/index.html`
+- Interactive API documentation with request/response examples
 
 ## 📖 Concepts Learned
 
