@@ -34,7 +34,7 @@ pkg/
 
 ## 🛠️ Technologies
 
-- **Go 1.21+**
+- **Go 1.25**
 - **Gin** - Web framework
 - **Layered Architecture** - Separation of concerns
 - **Swagger** - Docs
@@ -42,7 +42,7 @@ pkg/
 ## 🚀 How to Run
 
 ### Prerequisites
-- Go 1.21 or higher installed
+- Go 1.25
 
 ### Installation
 
