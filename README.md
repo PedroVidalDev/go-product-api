@@ -24,6 +24,12 @@ internal/
 ├── repositories/    # Data access (in-memory)
 ├── models/          # Data structures
 └── dtos/            # Data Transfer Objects
+└── routes/          # HTTP routes
+└── middlewares/     # Project middlewares (auth filter)
+
+pkg/
+├── auth/            # Authentication utilities (generate and verify tokens)
+├── db/              # Database connection (if any)
 ```
 
 ## 🛠️ Technologies
@@ -31,6 +37,7 @@ internal/
 - **Go 1.21+**
 - **Gin** - Web framework
 - **Layered Architecture** - Separation of concerns
+- **Swagger** - Docs
 
 ## 🚀 How to Run
 
@@ -41,7 +48,7 @@ internal/
 
 1. Clone the repository:
 ```bash
-git clone <your-repository>
+git clone https://github.com/PedroVidalDev/go-product-api
 cd go-product-api
 ```
 
@@ -66,7 +73,11 @@ The API will be available at `http://localhost:8080`
 - **Multiple returns**: Functions returning values and errors
 - **Gin Context**: HTTP request handling
 - **JSON Binding**: Automatic serialization/deserialization
+- **Database Operations**: CRUD operations
+- **Entity Relationships**: Managing related data
 - **Dependency Injection**: Manual dependency injection
+- **Swagger Integration**: API documentation
+- **Modular Code Organization**: Clean project structure
 
 ## 🎓 Study Resources
 
