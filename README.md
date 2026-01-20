@@ -10,7 +10,8 @@ This is a **study project** developed to learn the **Go (Golang)** programming l
 - Building REST APIs with Gin Framework
 - Implementing architectural patterns (Repository, Service, Controller)
 - Working with structs, interfaces, and pointers
-- JSON manipulation
+- JSON serialization/deserialization
+- Persisting data with a database (PostgreSQL)
 - Dependency management with Go Modules
 
 ## 🏗️ Architecture
@@ -21,7 +22,7 @@ The project follows a layered architecture:
 internal/
 ├── controllers/     # HTTP handlers (receives requests)
 ├── services/        # Business logic
-├── repositories/    # Data access (in-memory)
+├── repositories/    # Data access
 ├── models/          # Data structures
 └── dtos/            # Data Transfer Objects
 └── routes/          # HTTP routes
