@@ -1,4 +1,18 @@
 services:
+  api:
+    build: .
+    container_name: goproduct_api
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - goproduct-network
+
   db:
     image: postgres:latest
     container_name: goproduct_postgres
