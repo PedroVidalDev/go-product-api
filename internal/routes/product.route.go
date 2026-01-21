@@ -13,4 +13,6 @@ func RegisterProductRoutes(r *gin.Engine, controller *controllers.ProductControl
 
 	productGroup.GET("", controller.GetProducts)
 	productGroup.POST("", controller.CreateProduct)
+	productGroup.PUT("/:id", controller.UpdateProduct)
+	productGroup.DELETE("/:id", controller.DeleteProduct)
 }

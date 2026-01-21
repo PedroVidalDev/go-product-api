@@ -30,3 +30,25 @@ func  (s *ProductService) CreateProduct(name string, price float64, userId uint)
 
 	return s.repo.CreateProduct(newProduct)
 }
+
+func (s *ProductService) UpdateProduct(id string, name string, price float64, userId uint) (models.Product, error) {
+	if (price < 0) {
+		price = 0
+	}
+
+	updatedProduct := models.Product {
+		Name: name,
+		Price: price,
+		UserId: userId,
+	}
+
+	return s.repo.UpdateProduct(id, updatedProduct)
+}
+
+func (s *ProductService) DeleteProduct(id string, userId uint) error {
+	if err := s.repo.DeleteProduct(id, userId); err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -11,6 +11,9 @@ type IProductRepository interface { // Interface already applied to productRepos
 
 	CreateProduct(product models.Product) (models.Product, error)
 
+	UpdateProduct(id string, product models.Product) (models.Product, error)
+
+	DeleteProduct(id string, userId uint) error
 }
 
 type productRepository struct { // Repository 'class'
@@ -43,4 +46,35 @@ func (r *productRepository) CreateProduct(p models.Product) (models.Product, err
 	}
 
 	return p, nil
+}
+
+func (r *productRepository) UpdateProduct(id string, p models.Product) (models.Product, error) {
+	var existingProduct models.Product
+
+	if err := r.db.Where("id = ? AND user_id = ?", id, p.UserId).First(&existingProduct).Error; err != nil {
+		return models.Product{}, err
+	}
+
+	existingProduct.Name = p.Name
+	existingProduct.Price = p.Price
+
+	if err := r.db.Save(&existingProduct).Error; err != nil {
+		return models.Product{}, err
+	}
+
+	return existingProduct, nil
+}
+
+func (r *productRepository) DeleteProduct(id string, userId uint) error {
+	var product models.Product
+
+	if err := r.db.Where("id = ? AND user_id = ?", id, userId).First(&product).Error; err != nil {
+		return err
+	}
+
+	if err := r.db.Delete(&product).Error; err != nil {
+		return err
+	}
+
+	return nil
 }

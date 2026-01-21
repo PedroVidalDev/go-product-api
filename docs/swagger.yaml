@@ -82,11 +82,12 @@ definitions:
 host: localhost:8080
 info:
   contact:
-    email: pedro@exemplo.com
+    email: pedrohvidals@gmail.com
     name: Pedro Vidal
-  description: Example API created with Gin and Gorm
+  description: This is a study project developed to learn the Go (Golang) programming
+    language by building a simple REST API for product management.
   termsOfService: http://swagger.io/terms/
-  title: API de Produtos
+  title: Product API
   version: "1.0"
 paths:
   /login:
@@ -183,6 +184,91 @@ paths:
       security:
       - BearerAuth: []
       summary: Create Product
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a product owned by the authenticated user
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete Product
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Updates a product owned by the authenticated user
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Product Data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/go-product-api_internal_dtos_products.CreateProductType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/go-product-api_internal_models.Product'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update Product
       tags:
       - products
   /register:

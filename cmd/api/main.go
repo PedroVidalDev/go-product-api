@@ -11,9 +11,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// @title           API de Produtos
+// @title           Product API
 // @version         1.0
-// @description     Example API created with Gin and Gorm
+// @description     This is a study project developed to learn the Go (Golang) programming language by building a simple REST API for product management.
 // @termsOfService  http://swagger.io/terms/
 
 // @contact.name    Pedro Vidal
