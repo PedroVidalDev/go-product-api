@@ -122,6 +122,25 @@ All product routes require authentication via Bearer token in the Authorization 
 ```
 - **Response**: Created product object (201 Created)
 
+#### Update Product
+- **PUT** `/products/{id}`
+- **Description**: Updates an existing product owned by the authenticated user
+- **Headers**: `Authorization: Bearer <token>`
+- **Body**:
+```json
+{
+  "name": "Updated Product Name",
+  "price": 149.99
+}
+```
+- **Response**: Updated product object (200 OK)
+
+#### Delete Product
+- **DELETE** `/products/{id}`
+- **Description**: Deletes a product owned by the authenticated user
+- **Headers**: `Authorization: Bearer <token>`
+- **Response**: No content (204 No Content)
+
 ### Documentation
 
 - **Swagger UI**: `http://localhost:8080/swagger/index.html`
